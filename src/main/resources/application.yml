@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sports-live-events-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      retries: 3
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 30000
+        request.timeout.ms: 10000
+        max.in.flight.requests.per.connection: 5
+
+app:
+  polling:
+    interval: ${APP_POLLING_INTERVAL:10s}
+    scheduler-pool-size: ${APP_SCHEDULER_POOL_SIZE:5}
+  kafka:
+    score-topic: ${APP_KAFKA_SCORE_TOPIC:live-score-updates}
+    score-topic-partitions: ${APP_KAFKA_SCORE_TOPIC_PARTITIONS:1}
+    score-topic-replicas: ${APP_KAFKA_SCORE_TOPIC_REPLICAS:1}
+  external:
+    score-api:
+      base-url: ${EXTERNAL_SCORE_API_BASE_URL:http://localhost:8080/mock}
+      connect-timeout: ${EXTERNAL_SCORE_API_CONNECT_TIMEOUT:2s}
+      read-timeout: ${EXTERNAL_SCORE_API_READ_TIMEOUT:5s}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: sports-live-events-service
+
+logging:
+  level:
+    com.example.sportsevents: INFO

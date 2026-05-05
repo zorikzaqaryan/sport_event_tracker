@@ -1,0 +1,14 @@
+.git
+.gitignore
+.idea
+*.iml
+target/maven-archiver
+target/maven-status
+target/surefire-reports
+target/test-classes
+target/classes
+target/generated-sources
+target/generated-test-sources
+target/site
+docker-compose.yml
+README.md

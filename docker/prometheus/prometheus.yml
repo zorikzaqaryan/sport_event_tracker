@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: "sports-events-app"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      # "app:8080"            — use this when the app runs inside Docker (docker compose up)
+      # "host.docker.internal:8080" — use this when the app runs locally on your Mac (mvn spring-boot:run)
+      - targets: ["host.docker.internal:8080"]
