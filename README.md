@@ -1,6 +1,6 @@
 # Sports Live Events Tracker
 
-A small Java 21 / Spring Boot microservice that tracks live sports events. For every event marked `live`,
+A small Java 21 / Spring Boot microservice that tracks live sports events. For every event marked `LIVE`,
 the service polls an external score API every 10 seconds, transforms the response into a message,
 and publishes it to a Kafka topic. When the event becomes `NOT_LIVE`, polling is cancelled.
 ---
