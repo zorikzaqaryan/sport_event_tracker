@@ -76,7 +76,7 @@ wait_for_service() {
   info "Checking service health at ${BASE_URL}/actuator/health …"
   local attempts=0
   until curl -sf "${BASE_URL}/actuator/health" | grep -q '"UP"' 2>/dev/null; do
-    (( attempts++ ))
+    (( attempts++ )) || true
     if (( attempts >= 15 )); then
       err "Service did not become healthy after ${attempts} attempts. Is it running?"
       err "Start it with:  docker compose up --build -d"
@@ -212,7 +212,7 @@ while true; do
   delay=$(random_delay)
 
   send_update "$event_id" "$status"
-  (( request_count++ ))
+  (( request_count++ )) || true
 
   # Print a metrics snapshot every 30 seconds.
   if (( request_count % 10 == 0 )); then
